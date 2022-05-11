@@ -251,10 +251,18 @@ class Cursor(common.DBAPICursor):
             'X-Presto-Schema': self._schema,
             'X-Presto-Source': self._source,
             'X-Presto-User': self._username,
+            'X-Trino-Catalog': self._catalog,
+            'X-Trino-Schema': self._schema,
+            'X-Trino-Source': self._source,
+            'X-Trino-User': self._username,
         }
 
         if self._session_props:
             headers['X-Presto-Session'] = ','.join(
+                '{}={}'.format(propname, propval)
+                for propname, propval in self._session_props.items()
+            )
+            headers['X-Trino-Session'] = ','.join(
                 '{}={}'.format(propname, propval)
                 for propname, propval in self._session_props.items()
             )
@@ -343,6 +351,12 @@ class Cursor(common.DBAPICursor):
             self._session_props.pop(propname, None)
         if 'X-Presto-Set-Session' in response.headers:
             propname, propval = response.headers['X-Presto-Set-Session'].split('=', 1)
+            self._session_props[propname] = propval
+        if 'X-Trino-Clear-Session' in response.headers:
+            propname = response.headers['X-Trino-Clear-Session']
+            self._session_props.pop(propname, None)
+        if 'X-Trino-Set-Session' in response.headers:
+            propname, propval = response.headers['X-Trino-Set-Session'].split('=', 1)
             self._session_props[propname] = propval
         if 'data' in response_json:
             assert self._columns
