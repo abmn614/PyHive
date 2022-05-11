@@ -23,13 +23,13 @@ with open('README.rst') as readme:
     long_description = readme.read()
 
 setup(
-    name="PyHive",
+    name="PyHive-abmn614",
     version=pyhive.__version__,
     description="Python interface to Hive",
     long_description=long_description,
     url='https://github.com/dropbox/PyHive',
-    author="Jing Wang",
-    author_email="jing@dropbox.com",
+    author="dingliming",
+    author_email="dlming@foxmail.com",
     license="Apache License, Version 2.0",
     packages=['pyhive', 'TCLIService'],
     classifiers=[
