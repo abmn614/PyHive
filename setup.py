@@ -24,7 +24,7 @@ with open('README.rst') as readme:
 
 setup(
     name="PyHive-abmn614",
-    version=pyhive.__version__,
+    version="0.6.5",
     description="Python interface to Hive",
     long_description=long_description,
     url='https://github.com/dropbox/PyHive',
